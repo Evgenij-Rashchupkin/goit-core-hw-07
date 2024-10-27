@@ -24,14 +24,15 @@ class Phone(Field):
 
 
 class Birthday(Field):
-    def __init__(self, value):
+    def __init__(self, value):       
         try:
-            self.value = datetime.strptime(value, "%d.%m.%Y")
+            datetime.strptime(value, "%d.%m.%Y")
+            self.value = value
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
 
     def __str__(self):
-        return self.value.strftime("%d.%m.%Y")
+        return self.value
 
 
 class Record:
