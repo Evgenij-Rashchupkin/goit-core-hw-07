@@ -25,15 +25,14 @@ class Phone(Field):
 
 class Birthday(Field):
     def __init__(self, value):
-        # Проверяем формат даты
         try:
             datetime.strptime(value, "%d.%m.%Y")
-            self.value = value  # сохраняем строку, если формат верен
+            self.value = value
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
 
     def __str__(self):
-        return self.value  # возвращаем строку формата DD.MM.YYYY
+        return self.value
 
 
 class Record:
@@ -150,13 +149,10 @@ def add_contact(args, book: AddressBook):
 
 @input_error
 def change_contact(args, book: AddressBook):
-    name, new_phone = args
+    name, old_phone, new_phone = args
     record = book.find(name)
     if record:
-        if record.phones:
-            record.phones[0] = Phone(new_phone)
-        else:
-            record.add_phone(new_phone)
+        record.edit_phone(old_phone, new_phone)
         return f"Contact {name} updated successfully."
     else:
         raise KeyError("Contact not found.")
