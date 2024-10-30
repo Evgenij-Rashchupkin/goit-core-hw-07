@@ -107,6 +107,11 @@ class AddressBook(UserDict):
                 if birthday_this_year < today:
                     birthday_this_year = birthday_this_year.replace(year=today.year + 1)
 
+                if birthday_this_year.weekday() == 5:  # Субота
+                    birthday_this_year += timedelta(days=2)
+                elif birthday_this_year.weekday() == 6:  # Неділя
+                    birthday_this_year += timedelta(days=1)
+
                 if today <= birthday_this_year <= week_from_today:
                     upcoming_birthdays.append({
                         "name": record.name.value,
